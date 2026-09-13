@@ -34,7 +34,7 @@ const STATS = [
 export default function AboutPage() {
   return (
     <>
-      <section className="relative overflow-hidden pt-40 pb-20 sm:pt-48">
+      <section className="relative overflow-hidden pt-40 pb-20 sm:pt-48 sm:pb-24">
         <GiantText className="top-16 left-1/2 -translate-x-1/2">ABOUT</GiantText>
         <div className="container-custom relative">
           <SectionHeading
@@ -45,7 +45,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="pb-20 sm:pb-28">
+      <section className="pb-24 sm:pb-32">
         <div className="container-custom flex flex-col items-center gap-10 text-center sm:gap-14">
           <AnimatedText
             text="With a team spanning engineering, design, AI, and growth, we focus on shipping products that perform, rank, and stay secure. We genuinely enjoy working with founders who want to stand out and build something that lasts."
@@ -63,7 +63,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="pb-16">
+      <section className="pb-24 sm:pb-32">
         <div className="container-custom">
           <Reveal>
             <div className="flex flex-col items-center justify-between gap-10 rounded-3xl card-surface p-8 sm:flex-row sm:p-10">
@@ -85,7 +85,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="pb-24">
+      <section className="pb-24 sm:pb-32">
         <div className="container-custom grid gap-12 lg:grid-cols-2 lg:items-center">
           <Reveal>
             <h2 className="font-display text-2xl font-black uppercase tracking-tight text-foreground sm:text-3xl">
@@ -123,7 +123,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="pb-24">
+      <section className="pb-24 sm:pb-32">
         <div className="container-custom">
           <SectionHeading
             eyebrow="Our Standards"

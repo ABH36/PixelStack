@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ProcessPage() {
   return (
     <>
-      <section className="relative overflow-hidden pt-40 pb-20 sm:pt-48">
+      <section className="relative overflow-hidden pt-40 pb-20 sm:pt-48 sm:pb-24">
         <GiantText className="top-16 left-1/2 -translate-x-1/2">PROCESS</GiantText>
         <div className="container-custom relative">
           <SectionHeading

@@ -5,7 +5,7 @@ import { SpinBadge } from "./SpinBadge";
 
 export function CTASection() {
   return (
-    <section className="relative py-24 sm:py-28">
+    <section className="relative py-24 sm:py-32">
       <div className="container-custom">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-surface-2 px-8 py-16 text-center shadow-(--shadow-dark) sm:px-16">
