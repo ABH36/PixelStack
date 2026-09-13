@@ -79,7 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               "@type": "Organization",
               name: SITE.name,
               url: SITE_URL,
-              logo: `${SITE_URL}https://res.cloudinary.com/zxmmvaju/image/upload/v1789219498/pixelstack/brand/pixelstack-logo.png`,
+              logo: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219498/pixelstack/brand/pixelstack-logo.png",
               description: SITE.description,
               email: SITE.email,
               telephone: SITE.phone,
