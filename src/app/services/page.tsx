@@ -3,7 +3,7 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { GiantText } from "@/components/shared/GiantText";
 import { Reveal } from "@/components/shared/Reveal";
 import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
-import { ServicesShowcase } from "@/components/services/ServicesShowcase";
+import { ServicesGrid } from "@/components/services/ServicesGrid";
 import { CTASection } from "@/components/shared/CTASection";
 
 export const metadata: Metadata = {
@@ -48,10 +48,7 @@ export default function ServicesPage() {
 
       <section className="pb-24 sm:pb-32">
         <div className="container-custom">
-          <p className="mb-10 text-center text-xs font-bold uppercase tracking-[0.15em] text-muted sm:mb-12">
-            Hover or tap a card to see what&apos;s included
-          </p>
-          <ServicesShowcase />
+          <ServicesGrid />
         </div>
       </section>
 
