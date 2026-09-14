@@ -171,7 +171,7 @@ function RocketMarker({
       />
       <foreignObject x={-10} y={-10} width={20} height={20}>
         <div className="flex h-5 w-5 items-center justify-center text-white">
-          <Icon name="Rocket" className="h-3.5 w-3.5" />
+          <Icon name="Rocket" className="h-3.5 w-3.5 rotate-135" />
         </div>
       </foreignObject>
     </motion.g>
@@ -298,6 +298,9 @@ function DesktopDiagram({ progress }: { progress: MotionValue<number> }) {
 const M_CENTER_X = 210;
 const M_VB_W = 430;
 const M_ICON_R = 20;
+// Extra room around the spine icon's foreignObject so the overflowing
+// number badge (positioned via -right-1 -top-1) isn't clipped.
+const M_ICON_PAD = 8;
 const M_GAP = 14;
 const M_CARD_W = 165;
 const M_CARD_H = 158;
@@ -397,12 +400,14 @@ function MobileDiagram({ progress }: { progress: MotionValue<number> }) {
               <MobileCard node={node} side={side} />
             </foreignObject>
             <foreignObject
-              x={M_CENTER_X - M_ICON_R}
-              y={node.y - M_ICON_R}
-              width={M_ICON_R * 2}
-              height={M_ICON_R * 2}
+              x={M_CENTER_X - M_ICON_R - M_ICON_PAD}
+              y={node.y - M_ICON_R - M_ICON_PAD}
+              width={M_ICON_R * 2 + M_ICON_PAD * 2}
+              height={M_ICON_R * 2 + M_ICON_PAD * 2}
             >
-              <SpineIcon node={node} />
+              <div style={{ width: "100%", height: "100%", padding: M_ICON_PAD, boxSizing: "border-box" }}>
+                <SpineIcon node={node} />
+              </div>
             </foreignObject>
           </motion.g>
         );

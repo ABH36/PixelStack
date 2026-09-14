@@ -13,6 +13,7 @@ const AUTO_MS = 4500;
 export function Pillars() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState<number | null>(0);
 
   useEffect(() => {
     if (paused) return;
@@ -111,7 +112,7 @@ export function Pillars() {
 
         <div className="relative mt-16 flex flex-col gap-3 lg:hidden">
           {PILLARS.map((pillar, i) => {
-            const isActive = i === active;
+            const isActive = i === mobileOpen;
             return (
               <div
                 key={pillar.key}
@@ -130,7 +131,7 @@ export function Pillars() {
                   </>
                 )}
                 <button
-                  onClick={() => setActive(i)}
+                  onClick={() => setMobileOpen(isActive ? null : i)}
                   aria-pressed={isActive}
                   className="relative flex w-full items-center gap-4 p-4 text-left sm:p-5"
                 >

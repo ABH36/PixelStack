@@ -43,8 +43,8 @@ export function Footer() {
       <div className="pointer-events-none absolute -left-32 bottom-0 h-72 w-72 rounded-full glow-orb opacity-30" />
 
       <div className="container-custom relative py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
-          <div>
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr] lg:gap-12">
+          <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5">
               <Image
                 src="https://res.cloudinary.com/zxmmvaju/image/upload/v1789219497/pixelstack/brand/pixelstack-mark-transparent.png"
@@ -60,7 +60,7 @@ export function Footer() {
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-surface/70">
               {SITE.description}
             </p>
-            <p className="mt-4 font-script text-2xl text-primary-light">
+            <p className="mt-4 text-center font-script text-2xl text-primary-light lg:text-left">
               {SITE.tagline}
             </p>
           </div>
@@ -92,47 +92,49 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h3 className="text-sm font-bold uppercase tracking-wide text-surface">Get in Touch</h3>
-            <ul className="mt-4 space-y-3">
-              <li>
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="flex items-center gap-2 text-sm text-surface/70 transition-colors hover:text-primary-light"
-                >
-                  <Mail className="h-4 w-4" />
-                  {SITE.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={SITE.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-surface/70 transition-colors hover:text-primary-light"
-                >
-                  <Phone className="h-4 w-4" />
-                  {SITE.phone}
-                </a>
-              </li>
-            </ul>
-            <div className="mt-5 flex items-center gap-3">
-              {[
-                { icon: LinkedInIcon, href: SITE.social.linkedin, label: "LinkedIn" },
-                { icon: InstagramIcon, href: SITE.social.instagram, label: "Instagram" },
-                { icon: GitHubIcon, href: SITE.social.github, label: "GitHub" },
-              ].map(({ icon: IconCmp, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-surface/70 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-light hover:text-primary-light"
-                >
-                  <IconCmp className="h-4 w-4" />
-                </a>
-              ))}
+            <div className="mt-4 flex items-start justify-between gap-6 lg:contents">
+              <ul className="space-y-3 lg:mt-4">
+                <li>
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="flex items-center gap-2 text-sm text-surface/70 transition-colors hover:text-primary-light"
+                  >
+                    <Mail className="h-4 w-4" />
+                    {SITE.email}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={SITE.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-surface/70 transition-colors hover:text-primary-light"
+                  >
+                    <Phone className="h-4 w-4" />
+                    {SITE.phone}
+                  </a>
+                </li>
+              </ul>
+              <div className="flex items-center gap-3 lg:mt-5">
+                {[
+                  { icon: LinkedInIcon, href: SITE.social.linkedin, label: "LinkedIn" },
+                  { icon: InstagramIcon, href: SITE.social.instagram, label: "Instagram" },
+                  { icon: GitHubIcon, href: SITE.social.github, label: "GitHub" },
+                ].map(({ icon: IconCmp, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-surface/70 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-light hover:text-primary-light"
+                  >
+                    <IconCmp className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -11,10 +11,11 @@ import {
   type MotionValue,
 } from "framer-motion";
 
-const T1_START = 0.3;
-const T1_END = 0.42;
-const T2_START = 0.62;
-const T2_END = 0.74;
+const T1_START = 0.2;
+const T1_END = 0.34;
+const T2_START = 0.54;
+const T2_END = 0.68;
+const LAST_EXIT_START = 0.92;
 
 const STAGES = [
   {
@@ -69,7 +70,7 @@ function useStageMotion(
 
   const enterEnd = isFirst ? 0 : index === 1 ? T1_END : T2_END;
   const holdEnd = isFirst ? T1_START : index === 1 ? T2_START : 1;
-  const exitStart = isFirst ? T1_START : index === 1 ? T2_START : 0.94;
+  const exitStart = isFirst ? T1_START : index === 1 ? T2_START : LAST_EXIT_START;
   const exitEnd = isFirst ? T1_END - 0.02 : index === 1 ? T2_END - 0.02 : 1;
 
   const opacity = useTransform(
@@ -77,7 +78,7 @@ function useStageMotion(
     isFirst
       ? [0, holdEnd, T1_END]
       : isLast
-        ? [T2_START, enterEnd, 0.94, 1]
+        ? [T2_START, enterEnd, LAST_EXIT_START, 1]
         : [T1_START, enterEnd, holdEnd, T2_END],
     isFirst ? [1, 1, 0] : isLast ? [0, 1, 1, 0] : [0, 1, 1, 0]
   );
@@ -87,7 +88,7 @@ function useStageMotion(
     isFirst
       ? [0, 0.08, holdEnd, T1_END]
       : isLast
-        ? [T2_START, enterEnd, 0.94, 1]
+        ? [T2_START, enterEnd, LAST_EXIT_START, 1]
         : [T1_START, enterEnd, holdEnd, T2_END],
     isFirst ? [0.92, 1, 1, 1.06] : isLast ? [0.9, 1, 1, 1.05] : [0.9, 1, 1, 1.06]
   );
@@ -266,7 +267,7 @@ export function ScrollShowcase() {
   );
 
   return (
-    <section ref={sectionRef} className="relative h-[460vh] bg-surface">
+    <section ref={sectionRef} className="relative h-[320vh] bg-surface">
       <div className="sticky top-0 flex h-screen w-full flex-col items-center justify-center gap-3 overflow-hidden sm:gap-4">
         {/* Background environment */}
         <div
