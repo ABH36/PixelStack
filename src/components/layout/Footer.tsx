@@ -57,7 +57,7 @@ export function Footer() {
                 PixelStack
               </span>
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-surface/70">
+            <p className="mx-auto mt-4 max-w-sm text-center text-sm leading-relaxed text-surface/70 lg:mx-0 lg:text-left">
               {SITE.description}
             </p>
             <p className="mt-4 text-center font-script text-2xl text-primary-light lg:text-left">

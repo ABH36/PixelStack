@@ -68,6 +68,23 @@ function getPointOnRoute(segments: Segment[], totalLength: number, v: number) {
   return { x: last.x2, y: last.y2 };
 }
 
+// Angle (in degrees, screen convention: 0=right, 90=down) of the segment the
+// route marker is currently traveling along, so the rocket can point in its
+// actual direction of travel instead of a single fixed orientation — the
+// desktop path bends through several horizontal/vertical segments, unlike
+// the mobile path which only ever runs straight down.
+function getDirectionOnRoute(segments: Segment[], totalLength: number, v: number) {
+  const target = Math.max(0, Math.min(1, v)) * totalLength;
+  let acc = 0;
+  for (const seg of segments) {
+    if (target <= acc + seg.length || seg === segments[segments.length - 1]) {
+      return Math.atan2(seg.y2 - seg.y1, seg.x2 - seg.x1) * (180 / Math.PI);
+    }
+    acc += seg.length;
+  }
+  return 0;
+}
+
 function usePathMotion(segmentPairs: PointPair[], progress: MotionValue<number>) {
   const segments = buildSegments(segmentPairs);
   const totalLength = segments.reduce((sum, s) => sum + s.length, 0);
@@ -83,8 +100,14 @@ function usePathMotion(segmentPairs: PointPair[], progress: MotionValue<number>)
   const markerX = useTransform(markerPoint, (p) => p.x);
   const markerY = useTransform(markerPoint, (p) => p.y);
   const markerOpacity = useTransform(progress, [0, 0.02, 0.96, 1], [0, 1, 1, 0]);
+  // +45 corrects for the Rocket icon's native artwork, which points up-right
+  // (-45°) rather than along the positive x-axis (0°).
+  const markerAngle = useTransform(
+    progress,
+    (v) => getDirectionOnRoute(segments, totalLength, v) + 45
+  );
 
-  return { segments, fractions, markerX, markerY, markerOpacity };
+  return { segments, fractions, markerX, markerY, markerOpacity, markerAngle };
 }
 
 function SegmentLine({
@@ -155,10 +178,12 @@ function RocketMarker({
   x,
   y,
   opacity,
+  angle,
 }: {
   x: MotionValue<number>;
   y: MotionValue<number>;
   opacity: MotionValue<number>;
+  angle: MotionValue<number>;
 }) {
   return (
     <motion.g style={{ x, y, opacity }}>
@@ -170,9 +195,12 @@ function RocketMarker({
         style={{ filter: "drop-shadow(0 4px 10px var(--color-primary-glow))" }}
       />
       <foreignObject x={-10} y={-10} width={20} height={20}>
-        <div className="flex h-5 w-5 items-center justify-center text-white">
-          <Icon name="Rocket" className="h-3.5 w-3.5 rotate-135" />
-        </div>
+        <motion.div
+          className="flex h-5 w-5 items-center justify-center text-white"
+          style={{ rotate: angle }}
+        >
+          <Icon name="Rocket" className="h-3.5 w-3.5" />
+        </motion.div>
       </foreignObject>
     </motion.g>
   );
@@ -250,7 +278,7 @@ const DESKTOP_SEGMENT_PAIRS: PointPair[] = [
 const DESKTOP_VIEWBOX = `0 0 1220 ${DESKTOP_GOAL.y + 60}`;
 
 function DesktopDiagram({ progress }: { progress: MotionValue<number> }) {
-  const { segments, fractions, markerX, markerY, markerOpacity } = usePathMotion(
+  const { segments, fractions, markerX, markerY, markerOpacity, markerAngle } = usePathMotion(
     DESKTOP_SEGMENT_PAIRS,
     progress
   );
@@ -288,7 +316,7 @@ function DesktopDiagram({ progress }: { progress: MotionValue<number> }) {
       ))}
 
       <GoalFlag x={DESKTOP_GOAL.x} y={DESKTOP_GOAL.y} />
-      <RocketMarker x={markerX} y={markerY} opacity={markerOpacity} />
+      <RocketMarker x={markerX} y={markerY} opacity={markerOpacity} angle={markerAngle} />
     </svg>
   );
 }
@@ -362,7 +390,7 @@ function SpineIcon({ node }: { node: Node }) {
 }
 
 function MobileDiagram({ progress }: { progress: MotionValue<number> }) {
-  const { segments, fractions, markerX, markerY, markerOpacity } = usePathMotion(
+  const { segments, fractions, markerX, markerY, markerOpacity, markerAngle } = usePathMotion(
     MOBILE_SEGMENT_PAIRS,
     progress
   );
@@ -414,7 +442,7 @@ function MobileDiagram({ progress }: { progress: MotionValue<number> }) {
       })}
 
       <GoalFlag x={MOBILE_GOAL.x} y={MOBILE_GOAL.y} />
-      <RocketMarker x={markerX} y={markerY} opacity={markerOpacity} />
+      <RocketMarker x={markerX} y={markerY} opacity={markerOpacity} angle={markerAngle} />
     </svg>
   );
 }
