@@ -15,7 +15,7 @@ export function AnimatedCounter({
   delay?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const inView = useInView(ref, { once: true, margin: "-40px 0px" });
   const count = useMotionValue(0);
   const rounded = useTransform(count, (v) => Math.round(v));
 

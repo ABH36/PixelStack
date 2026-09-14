@@ -115,15 +115,13 @@ export function HeroShowcase() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4 }}
-              className="glass-panel flex items-center gap-3 rounded-full px-5 py-2.5"
+              className="glass-panel flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-2xl px-5 py-2.5 text-center sm:flex-nowrap sm:rounded-full"
             >
               <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
               <span className="text-xs font-bold uppercase tracking-wide text-foreground">
                 {active.category}
               </span>
-              <span className="hidden text-xs text-muted sm:inline">
-                {active.name}
-              </span>
+              <span className="text-xs text-muted">{active.name}</span>
             </motion.div>
           </AnimatePresence>
 
