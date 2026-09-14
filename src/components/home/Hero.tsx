@@ -12,9 +12,9 @@ import { HeroShowcase } from "./HeroShowcase";
 const EYEBROW = ["Ideas", "Interfaces", "Intelligence"];
 
 const STATS = [
-  { value: 6, label: "Specialists" },
-  { value: 4, label: "Focus Pillars" },
-  { value: 1, label: "Team, End-to-End" },
+  { value: 6, suffix: "", label: "Specialists" },
+  { value: 4, suffix: "", label: "Focus Pillars" },
+  { value: 20, suffix: "+", label: "Projects" },
 ];
 
 export function Hero() {
@@ -160,22 +160,22 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.78 }}
-            className="mt-8 flex flex-wrap items-center gap-4"
+            className="mt-8 flex flex-nowrap items-center gap-2 sm:gap-4"
           >
             <Magnet padding={70} strength={4}>
               <Link
                 href="/contact"
-                className="btn-primary inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-white"
+                className="btn-primary inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3.5 py-2.5 text-[11px] font-bold text-white sm:gap-2 sm:px-6 sm:py-3.5 sm:text-sm"
               >
                 Start Your Project
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" />
               </Link>
             </Magnet>
             <Link
               href="/projects"
-              className="btn-ghost inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold text-foreground"
+              className="btn-ghost inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3.5 py-2.5 text-[11px] font-bold text-foreground sm:gap-2 sm:px-6 sm:py-3.5 sm:text-sm"
             >
-              <PlayCircle className="h-4 w-4" />
+              <PlayCircle className="h-3 w-3 shrink-0 sm:h-4 sm:w-4" />
               View Our Work
             </Link>
           </motion.div>
@@ -189,7 +189,7 @@ export function Hero() {
             {STATS.map((stat, i) => (
               <div key={stat.label}>
                 <p className="font-display text-xl font-black text-foreground sm:text-2xl">
-                  <AnimatedCounter value={stat.value} delay={0.95 + i * 0.1} />
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} delay={0.95 + i * 0.1} />
                 </p>
                 <p className="mt-1 text-xs font-medium text-muted">{stat.label}</p>
               </div>
