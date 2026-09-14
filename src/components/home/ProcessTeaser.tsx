@@ -5,7 +5,7 @@ import { ProcessPath } from "./ProcessPath";
 
 export function ProcessTeaser() {
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32">
+    <section className="relative overflow-hidden py-16 sm:py-24">
       <div className="container-custom">
         <SectionHeading
           eyebrow="How We Work"

@@ -236,7 +236,7 @@ function StageContent({
         <span className="text-primary">{stage.highlight}</span>
         {stage.post}
       </h3>
-      <p className="mt-3 max-w-md text-xs leading-relaxed text-muted sm:text-sm">
+      <p className="mt-3 max-w-md text-balance text-xs leading-relaxed text-muted sm:text-sm">
         {stage.description}
       </p>
     </motion.div>

@@ -37,7 +37,7 @@ export function ScrollMarquee() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="overflow-hidden py-16 sm:py-20">
+    <section ref={sectionRef} className="overflow-hidden py-12 sm:py-16">
       <div className="mb-8 text-center">
         <span className="sticker bg-surface">Selected Work</span>
       </div>

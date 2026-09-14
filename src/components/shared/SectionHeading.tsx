@@ -39,7 +39,7 @@ export function SectionHeading({
           <p
             className={cn(
               "max-w-xl text-base text-muted sm:text-lg",
-              align === "center" ? "mx-auto" : ""
+              align === "center" ? "mx-auto text-center text-balance" : ""
             )}
           >
             {description}

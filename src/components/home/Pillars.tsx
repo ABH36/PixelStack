@@ -23,7 +23,7 @@ export function Pillars() {
   }, [active, paused]);
 
   return (
-    <section className="relative py-24 sm:py-32">
+    <section className="relative py-16 sm:py-24">
       <div className="container-custom">
         <SectionHeading
           eyebrow="What We Stand On"

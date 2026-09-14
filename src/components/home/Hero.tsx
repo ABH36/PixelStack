@@ -9,8 +9,6 @@ import { Magnet } from "@/components/shared/Magnet";
 import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
 import { HeroShowcase } from "./HeroShowcase";
 
-const EYEBROW = ["Ideas", "Interfaces", "Intelligence"];
-
 const STATS = [
   { value: 6, suffix: "", label: "Specialists" },
   { value: 4, suffix: "", label: "Focus Pillars" },
@@ -72,31 +70,7 @@ export function Hero() {
             className="pointer-events-none absolute -inset-10 -z-10 opacity-0 blur-xl transition-opacity duration-500"
           />
 
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-muted">
-            {EYEBROW.map((part, i) => (
-              <span key={part} className="flex items-center gap-2">
-                <motion.span
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.12 }}
-                >
-                  {part}
-                </motion.span>
-                {i < EYEBROW.length - 1 && (
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: i * 0.12 + 0.08 }}
-                    className="text-primary"
-                  >
-                    <ArrowUpRight className="h-3 w-3 rotate-45" />
-                  </motion.span>
-                )}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-5 overflow-hidden">
+          <div className="overflow-hidden">
             <motion.h1
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -204,13 +178,6 @@ export function Hero() {
         >
           <HeroShowcase />
         </motion.div>
-      </div>
-
-      <div
-        className="animate-float-y-sm absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-muted lg:flex"
-      >
-        Scroll
-        <span className="h-px w-8 bg-border" />
       </div>
     </section>
   );
