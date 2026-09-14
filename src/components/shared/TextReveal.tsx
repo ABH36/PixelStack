@@ -9,12 +9,17 @@ export function TextReveal({
   stagger = 0.03,
   as: Tag = "span",
   className,
+  highlightIndices = [],
+  highlightClassName = "text-primary",
 }: {
   text: string;
   delay?: number;
   stagger?: number;
   as?: "span" | "h2" | "h3" | "p";
   className?: string;
+  /** 0-based word indices to render in `highlightClassName` instead of the base color. */
+  highlightIndices?: number[];
+  highlightClassName?: string;
 }) {
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.6 });
@@ -34,6 +39,7 @@ export function TextReveal({
         >
           <motion.span
             style={{ display: "inline-block" }}
+            className={highlightIndices.includes(i) ? highlightClassName : undefined}
             initial={{ y: "110%" }}
             animate={isInView ? { y: "0%" } : { y: "110%" }}
             transition={{

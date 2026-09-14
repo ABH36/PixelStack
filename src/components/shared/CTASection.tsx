@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 import { SpinBadge } from "./SpinBadge";
+import { TextReveal } from "./TextReveal";
 
 export function CTASection() {
   return (
@@ -18,10 +19,13 @@ export function CTASection() {
             </span>
             <div className="pointer-events-none absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full glow-orb opacity-30" />
 
-            <h2 className="relative font-display text-3xl font-black uppercase leading-[0.95] text-surface sm:text-4xl md:text-5xl">
-              Let&apos;s build something{" "}
-              <span className="text-primary-light">extraordinary</span>
-            </h2>
+            <TextReveal
+              as="h2"
+              text="Let's build something extraordinary"
+              highlightIndices={[3]}
+              highlightClassName="text-primary-light"
+              className="relative font-display text-3xl font-black uppercase leading-[0.95] text-surface sm:text-4xl md:text-5xl"
+            />
             <p className="relative mx-auto mt-5 max-w-xl text-base text-surface/70 sm:text-lg">
               Tell us about your idea — we&apos;ll bring the engineering,
               design, AI, and strategy to make it real.

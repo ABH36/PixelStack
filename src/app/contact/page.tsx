@@ -48,7 +48,7 @@ export default function ContactPage() {
             description="Fill out the form, or reach us directly — we typically reply within a business day."
           />
 
-          <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.3fr]">
+          <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.3fr] lg:items-center">
             <Reveal>
               <div className="flex flex-col gap-5">
                 <a

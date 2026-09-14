@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import { getMongoClientPromise } from "@/lib/mongodb";
 import { getMailTransporter, escapeHtml } from "@/lib/mailer";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const client = await clientPromise;
+    const client = await getMongoClientPromise();
     const db = client.db(process.env.MONGODB_DB);
     await db.collection("contacts").insertOne({
       name,

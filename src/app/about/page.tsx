@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { TextReveal } from "@/components/shared/TextReveal";
 import { GiantText } from "@/components/shared/GiantText";
 import { SpinBadge } from "@/components/shared/SpinBadge";
 import { Reveal } from "@/components/shared/Reveal";
@@ -88,9 +89,11 @@ export default function AboutPage() {
       <section className="pb-24 sm:pb-32">
         <div className="container-custom grid gap-12 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <h2 className="font-display text-2xl font-black uppercase tracking-tight text-foreground sm:text-3xl">
-              Why we exist
-            </h2>
+            <TextReveal
+              as="h2"
+              text="Why we exist"
+              className="font-display text-2xl font-black uppercase tracking-tight text-foreground sm:text-3xl"
+            />
             <p className="mt-5 text-base leading-relaxed text-muted">
               Most agencies split a project across freelancers who never talk
               to each other — a designer here, a developer there, SEO
