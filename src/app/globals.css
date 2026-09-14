@@ -119,14 +119,6 @@ body {
   background: var(--color-primary-dark);
 }
 
-.no-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
 .container-custom {
   width: 100%;
   max-width: 80rem;

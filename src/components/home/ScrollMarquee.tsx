@@ -1,124 +1,126 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { PROJECTS } from "@/data/projects";
 import { MarqueeTile } from "./MarqueeTile";
 
 const ROW_1 = [...PROJECTS.slice(0, 5), ...PROJECTS.slice(0, 5), ...PROJECTS.slice(0, 5)];
 const ROW_2 = [...PROJECTS.slice(4), ...PROJECTS.slice(4), ...PROJECTS.slice(4)];
 
-const AUTO_SPEED = 0.5;
-const RESUME_DELAY_MS = 1500;
+type RowKey = "row1" | "row2";
 
-function MarqueeRow({
-  items,
-  reverse,
-  rowKey,
-}: {
-  items: typeof PROJECTS;
-  reverse?: boolean;
-  rowKey: string;
-}) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const pausedRef = useRef(false);
-  const positionRef = useRef(0);
-  const resumeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const dragRef = useRef<{ startX: number; startScrollLeft: number } | null>(null);
+export function ScrollMarquee() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
+  const baseOffsetRef = useRef(0);
+  const manualOffsetRef = useRef<Record<RowKey, number>>({ row1: 0, row2: 0 });
+  const dragRef = useRef<{ row: RowKey; startX: number; startManual: number } | null>(null);
+
+  const rowEl = useCallback(
+    (row: RowKey) => (row === "row1" ? row1Ref.current : row2Ref.current),
+    []
+  );
+
+  // Positions each row from the scroll-linked base offset plus whatever the
+  // user has manually dragged, wrapped modulo one tile-set width so the
+  // tripled list loops seamlessly no matter how far either offset travels.
+  const applyTransform = useCallback(
+    (row: RowKey, sign: 1 | -1) => {
+      const el = rowEl(row);
+      if (!el) return;
+      const singleSetWidth = el.scrollWidth / 3 || 1;
+      const raw = sign * baseOffsetRef.current + manualOffsetRef.current[row];
+      let wrapped = raw % singleSetWidth;
+      if (wrapped > 0) wrapped -= singleSetWidth;
+      el.style.transform = `translateX(${wrapped - singleSetWidth}px)`;
+    },
+    [rowEl]
+  );
+
+  const applyAll = useCallback(() => {
+    applyTransform("row1", 1);
+    applyTransform("row2", -1);
+  }, [applyTransform]);
 
   useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
+    let ticking = false;
 
-    const singleSetWidth = el.scrollWidth / 3;
-    positionRef.current = singleSetWidth;
-    el.scrollLeft = singleSetWidth;
-
-    // Track our own float position instead of reading el.scrollLeft back each
-    // frame — the browser rounds scrollLeft to whole pixels, so subtracting a
-    // fractional step from an already-whole value can round straight back to
-    // where it started and stall the reverse-direction row forever.
-    let frame: number;
-    function tick() {
-      if (el && !pausedRef.current) {
-        const width = el.scrollWidth / 3;
-        positionRef.current += reverse ? -AUTO_SPEED : AUTO_SPEED;
-        if (positionRef.current >= width * 2) {
-          positionRef.current -= width;
-        } else if (positionRef.current <= 0) {
-          positionRef.current += width;
-        }
-        el.scrollLeft = positionRef.current;
+    function update() {
+      const el = sectionRef.current;
+      if (!el) {
+        ticking = false;
+        return;
       }
-      frame = requestAnimationFrame(tick);
+      const rect = el.getBoundingClientRect();
+      const sectionTop = rect.top + window.scrollY;
+      baseOffsetRef.current = (window.scrollY - sectionTop + window.innerHeight) * 0.3 - 200;
+      applyAll();
+      ticking = false;
     }
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [reverse]);
 
-  function pause() {
-    pausedRef.current = true;
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-  }
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
 
-  function scheduleResume() {
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => {
-      if (trackRef.current) positionRef.current = trackRef.current.scrollLeft;
-      pausedRef.current = false;
-    }, RESUME_DELAY_MS);
-  }
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [applyAll]);
 
   function handlePointerDown(e: React.PointerEvent<HTMLDivElement>) {
-    pause();
-    if (e.pointerType === "mouse" && trackRef.current) {
-      e.preventDefault();
-      dragRef.current = { startX: e.clientX, startScrollLeft: trackRef.current.scrollLeft };
-      trackRef.current.setPointerCapture(e.pointerId);
-    }
+    const row: RowKey = e.currentTarget === row1Ref.current ? "row1" : "row2";
+    dragRef.current = { row, startX: e.clientX, startManual: manualOffsetRef.current[row] };
+    e.currentTarget.setPointerCapture(e.pointerId);
   }
 
   function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
-    if (dragRef.current && trackRef.current) {
-      trackRef.current.scrollLeft = dragRef.current.startScrollLeft - (e.clientX - dragRef.current.startX);
-    }
+    const drag = dragRef.current;
+    if (!drag) return;
+    manualOffsetRef.current[drag.row] = drag.startManual + (e.clientX - drag.startX);
+    applyAll();
   }
 
   function handlePointerUp() {
     dragRef.current = null;
-    scheduleResume();
   }
 
   return (
-    <div
-      ref={trackRef}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      onMouseEnter={pause}
-      onMouseLeave={scheduleResume}
-      onTouchStart={pause}
-      onTouchEnd={scheduleResume}
-      className="no-scrollbar flex cursor-grab select-none gap-3 overflow-x-auto active:cursor-grabbing"
-      style={{ WebkitOverflowScrolling: "touch" }}
-    >
-      {items.map((project, i) => (
-        <MarqueeTile key={`${project.slug}-${rowKey}-${i}`} project={project} />
-      ))}
-    </div>
-  );
-}
-
-export function ScrollMarquee() {
-  return (
-    <section className="overflow-hidden py-12 sm:py-16">
+    <section ref={sectionRef} className="overflow-hidden py-12 sm:py-16">
       <div className="mb-8 text-center">
         <span className="sticker bg-surface">Selected Work</span>
       </div>
 
       <div className="flex flex-col gap-3">
-        <MarqueeRow items={ROW_1} rowKey="r1" />
-        <MarqueeRow items={ROW_2} rowKey="r2" reverse />
+        <div
+          ref={row1Ref}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          className="flex cursor-grab touch-pan-y select-none gap-3 active:cursor-grabbing"
+          style={{ willChange: "transform" }}
+        >
+          {ROW_1.map((project, i) => (
+            <MarqueeTile key={`${project.slug}-r1-${i}`} project={project} />
+          ))}
+        </div>
+        <div
+          ref={row2Ref}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          className="flex cursor-grab touch-pan-y select-none gap-3 active:cursor-grabbing"
+          style={{ willChange: "transform" }}
+        >
+          {ROW_2.map((project, i) => (
+            <MarqueeTile key={`${project.slug}-r2-${i}`} project={project} />
+          ))}
+        </div>
       </div>
     </section>
   );
