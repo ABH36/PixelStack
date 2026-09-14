@@ -58,7 +58,7 @@ export function Hero() {
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className="relative"
+          className="relative text-center"
         >
           <div
             aria-hidden
@@ -134,7 +134,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.78 }}
-            className="mt-8 flex flex-nowrap items-center gap-2 sm:gap-4"
+            className="mt-8 flex flex-nowrap items-center justify-center gap-2 sm:gap-4"
           >
             <Magnet padding={70} strength={4}>
               <Link
@@ -158,7 +158,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="mt-10 grid max-w-md grid-cols-3 gap-6 border-t border-border-soft pt-5"
+            className="mx-auto mt-10 grid max-w-md grid-cols-3 gap-6 border-t border-border-soft pt-5"
           >
             {STATS.map((stat, i) => (
               <div key={stat.label}>
