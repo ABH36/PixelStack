@@ -124,7 +124,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.65 }}
-            className="mt-5 max-w-md text-base leading-relaxed text-muted sm:text-lg"
+            className="mt-5 max-w-md text-balance text-center text-base leading-relaxed text-muted sm:text-lg"
           >
             We design, develop, and scale websites, mobile applications,
             and AI-powered products for ambitious brands.
