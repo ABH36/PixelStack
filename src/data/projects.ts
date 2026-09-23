@@ -9,6 +9,7 @@ export type Project = {
   image: string;
   images?: [string, string, string];
   accent: string;
+  link?: string;
 };
 
 export const PROJECTS: Project[] = [
@@ -29,6 +30,7 @@ export const PROJECTS: Project[] = [
     tags: ["Next.js", "Booking", "SEO"],
     image: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219511/pixelstack/projects/shree-mahadev-travels.png",
     accent: "#D4A017",
+    link: "https://mahadevtravelsujjain.in/",
   },
   {
     slug: "arihant-cables",
@@ -38,6 +40,7 @@ export const PROJECTS: Project[] = [
     tags: ["Web Design", "B2B", "Product Catalog"],
     image: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219512/pixelstack/projects/arihant-cables.png",
     accent: "#F97316",
+    link: "https://www.arihantcables.com/",
   },
   {
     slug: "leadbroo",
@@ -52,6 +55,7 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219513/pixelstack/projects/leadbroo.png",
     ],
     accent: "#22D3EE",
+    link: "https://leadbroo.com/",
   },
   {
     slug: "linen-mantra",
@@ -66,6 +70,7 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219516/pixelstack/projects/linen-mantra.png",
     ],
     accent: "#7A6C2E",
+    link: "https://linenmantra.com/",
   },
   {
     slug: "terra-shoppy",
@@ -80,6 +85,7 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219519/pixelstack/projects/terra-shoppy.png",
     ],
     accent: "#DC2626",
+    link: "https://terrashoppy.com/",
   },
   {
     slug: "govind-industries",
@@ -89,6 +95,7 @@ export const PROJECTS: Project[] = [
     tags: ["Web Design", "B2B", "Manufacturing"],
     image: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219521/pixelstack/projects/govind-industries.png",
     accent: "#2563EB",
+    link: "https://www.govindindustries.com/",
   },
   {
     slug: "allied-industries",
@@ -98,6 +105,7 @@ export const PROJECTS: Project[] = [
     tags: ["Web Design", "B2B", "Industrial"],
     image: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219522/pixelstack/projects/allied-industries.png",
     accent: "#15803D",
+    link: "https://alliedworld-alliedworld-frontend.qbol3h.easypanel.host/",
   },
   {
     slug: "royal-steel-india",
@@ -107,6 +115,7 @@ export const PROJECTS: Project[] = [
     tags: ["Web Design", "B2B", "Export"],
     image: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219523/pixelstack/projects/royal-steel-india.png",
     accent: "#B91C1C",
+    link: "https://www.royalsteelindia.com/",
   },
   {
     slug: "ramdas-power",
@@ -116,6 +125,7 @@ export const PROJECTS: Project[] = [
     tags: ["Web Design", "B2B", "Electrical"],
     image: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219524/pixelstack/projects/ramdas-power.png",
     accent: "#EA580C",
+    link: "https://www.ramdaspower.com/",
   },
   {
     slug: "rankhelper",
@@ -125,6 +135,27 @@ export const PROJECTS: Project[] = [
     tags: ["AI Product", "SEO", "SaaS"],
     image: "https://res.cloudinary.com/zxmmvaju/image/upload/v1789219525/pixelstack/projects/rankhelper.png",
     accent: "#7C3AED",
+    link: "https://seo-seo-frontend.qbol3h.easypanel.host/",
+  },
+  {
+    slug: "mohit-scpl",
+    title: "Mohit SCPL",
+    category: "Web",
+    tagline: "An authorized Polycab & Dowells distributor website for premium cables, switchgears, and solar products.",
+    tags: ["Web Design", "B2B", "Distribution"],
+    image: "https://res.cloudinary.com/da2dmtm9b/image/upload/v1785492078/mohit_media/diu0a1ouudzl0lx74y9h.jpg",
+    accent: "#2563EB",
+    link: "https://www.mohitscpl.com/",
+  },
+  {
+    slug: "real-switchgears",
+    title: "Real Switchgears",
+    category: "Web",
+    tagline: "An authorized distributor & stockist website for Lauritz Knudsen (L&T Switchgears) and Polycab wires.",
+    tags: ["Web Design", "B2B", "Electrical"],
+    image: "https://www.realswitchgears.com/images/banner/l_t_switchgear.jpg",
+    accent: "#059669",
+    link: "https://www.realswitchgears.com/",
   },
 ];
 

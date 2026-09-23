@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Outfit, Caveat } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
+import localFont from "next/font/local";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SITE, SITE_URL } from "@/lib/utils";
@@ -18,10 +19,9 @@ const outfit = Outfit({
   display: "swap",
 });
 
-const caveat = Caveat({
+const caveat = localFont({
+  src: "../fonts/caveat.woff2",
   variable: "--font-caveat",
-  subsets: ["latin"],
-  weight: ["600", "700"],
   display: "swap",
 });
 

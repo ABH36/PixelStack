@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { PROJECTS } from "@/data/projects";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { OutlineLink } from "@/components/shared/OutlineLink";
@@ -37,6 +37,16 @@ function StackCard({
     project.image,
   ];
 
+  const LinkComponent = project.link ? "a" : "div";
+  const linkProps = project.link
+    ? {
+        href: project.link,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        title: `Visit ${project.title} live website`,
+      }
+    : {};
+
   return (
     <div
       ref={ref}
@@ -44,9 +54,9 @@ function StackCard({
       style={{ paddingTop: `${index * 20}px` }}
     >
       <motion.div style={{ scale }} className="w-full">
-        <Link
-          href="/projects"
-          className="group block overflow-hidden rounded-[2.5rem] border-[1.5px] border-border bg-surface p-4 shadow-(--shadow-card-hover) transition-transform duration-300 hover:-translate-y-1 sm:p-6 md:rounded-[3rem] md:p-8"
+        <LinkComponent
+          {...linkProps}
+          className="group block overflow-hidden rounded-[2.5rem] border-[1.5px] border-border bg-surface p-4 shadow-(--shadow-card-hover) transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 sm:p-6 md:rounded-[3rem] md:p-8"
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -57,19 +67,27 @@ function StackCard({
                 <p className="text-xs font-bold uppercase tracking-wide text-primary">
                   {project.category}
                 </p>
-                <h3 className="font-display text-xl font-black uppercase tracking-tight text-foreground sm:text-2xl">
+                <h3 className="font-display text-xl font-black uppercase tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-2xl">
                   {project.title}
                 </h3>
               </div>
             </div>
-            <span className="rounded-full border border-border px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-muted">
-              Live Project
-            </span>
+
+            {project.link ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+                Visit Live Site
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            ) : (
+              <span className="rounded-full border border-border px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-muted">
+                Mobile App
+              </span>
+            )}
           </div>
 
           <div className="mt-5 grid h-64 grid-cols-[1fr_1.7fr] gap-3 sm:mt-6 sm:h-80 md:h-96">
             <div className="flex flex-col gap-3">
-              <div className="relative flex-1 overflow-hidden rounded-2xl">
+              <div className="relative flex-1 overflow-hidden rounded-2xl bg-surface-2">
                 <Image
                   src={imgTopLeft}
                   alt={`${project.title} screenshot 1`}
@@ -78,7 +96,7 @@ function StackCard({
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="relative flex-1 overflow-hidden rounded-2xl">
+              <div className="relative flex-1 overflow-hidden rounded-2xl bg-surface-2">
                 <Image
                   src={imgBottomLeft}
                   alt={`${project.title} screenshot 2`}
@@ -88,7 +106,7 @@ function StackCard({
                 />
               </div>
             </div>
-            <div className="relative overflow-hidden rounded-2xl">
+            <div className="relative overflow-hidden rounded-2xl bg-surface-2">
               <Image
                 src={imgLarge}
                 alt={`${project.title} screenshot 3`}
@@ -99,10 +117,18 @@ function StackCard({
             </div>
           </div>
 
-          <p className="mt-5 max-w-lg text-sm leading-relaxed text-muted sm:text-base">
-            {project.tagline}
-          </p>
-        </Link>
+          <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-lg text-sm leading-relaxed text-muted sm:text-base">
+              {project.tagline}
+            </p>
+            {project.link && (
+              <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-primary transition-all duration-300 group-hover:text-primary-light group-hover:translate-x-1">
+                Explore Live Project
+                <ArrowUpRight className="h-4 w-4" />
+              </span>
+            )}
+          </div>
+        </LinkComponent>
       </motion.div>
     </div>
   );
